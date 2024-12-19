@@ -1,17 +1,32 @@
-# Dockerfile for React app
+# Build Stage
+FROM node:16-alpine AS build
+
+WORKDIR /app
+
+# Copy the package files and install dependencies
+COPY package*.json ./
+RUN npm install
+
+# Copy the source code and build the React app
+COPY . .
+RUN npm run build
+
+# Production Stage
 FROM node:16-alpine
 
 WORKDIR /app
 
-COPY package.json ./
-RUN npm install
+# Install Express
+RUN npm install express
 
-COPY ./src ./src
-COPY ./public ./public
-COPY webpack.config.js .
-COPY .babelrc .
+# Copy the build files from the build stage
+COPY --from=build /app/build /app/build
 
-RUN npm run build
+# Add a simple Express server
+COPY server.js /app/server.js
 
-# Serve the app with React routing support
-CMD ["npx", "serve", "-s", "build", "-l", "3000"]
+# Expose port 3000
+EXPOSE 3000
+
+# Start the Express server
+CMD ["node", "server.js"]

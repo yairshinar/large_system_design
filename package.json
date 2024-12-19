@@ -1,4 +1,5 @@
 {
+  "homepage": "/sysdesign",
   "name": "analytics-platform",
   "version": "1.0.0",
   "description": "Frontend-only React app for system design showcase.",
@@ -12,7 +13,9 @@
   "license": "MIT",
   "dependencies": {
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "serve": "^14.2.4",
+    "serve-handler": "^6.1.6"
   },
   "devDependencies": {
     "@babel/core": "^7.22.0",
